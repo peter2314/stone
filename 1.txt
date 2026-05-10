@@ -1,74 +1,159 @@
-import java.util.*;
+// BFS
 
-public class GraphTraversal {
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Scanner;
 
-    int vertices = 5;
+public class BFSGraph {
 
-    // Adjacency Matrix
-    int graph[][] = {
-        {0,1,1,0,0},
-        {1,0,0,1,0},
-        {1,0,0,0,1},
-        {0,1,0,0,0},
-        {0,0,1,0,0}
-    };
+    private int ver;
+    private LinkedList<Integer>[] adjList;
 
-    // ---------------- BFS ----------------
-    void bfs(int start) {
+    BFSGraph(int v) {
+        ver = v;
+        adjList = new LinkedList[ver];
 
-        boolean visited[] = new boolean[vertices];
+        for (int i = 0; i < v; i++) {
+            adjList[i] = new LinkedList<>();
+        }
+    }
+
+    void addEdge(int v, int w) {
+        adjList[v].add(w);
+        adjList[w].add(v);
+    }
+
+    void BFS(int start) {
+
+        System.out.println("BFS Traversal................");
+
+        boolean[] vis = new boolean[ver];
 
         Queue<Integer> queue = new LinkedList<>();
 
-        visited[start] = true;
-        queue.add(start);
+        vis[start] = true;
 
-        System.out.print("BFS Traversal: ");
+        queue.add(start);
 
         while (!queue.isEmpty()) {
 
-            int node = queue.poll();
-            System.out.print(node + " ");
+            int v = queue.poll();
 
-            for (int i = 0; i < vertices; i++) {
+            System.out.print(v + " ");
 
-                if (graph[node][i] == 1 && !visited[i]) {
-                    visited[i] = true;
+            for (int i : adjList[v]) {
+
+                if (!vis[i]) {
+
+                    vis[i] = true;
+
                     queue.add(i);
                 }
             }
         }
+
+        System.out.println();
     }
 
-    // ---------------- DFS ----------------
-    void dfs(int node, boolean visited[]) {
+    public static void main(String[] args) {
 
-        visited[node] = true;
+        Scanner sc = new Scanner(System.in);
 
-        System.out.print(node + " ");
+        System.out.println("Enter the no of vertices");
+        int v = sc.nextInt();
 
-        for (int i = 0; i < vertices; i++) {
+        System.out.println("Enter the number of edges");
+        int e = sc.nextInt();
 
-            if (graph[node][i] == 1 && !visited[i]) {
-                dfs(i, visited);
+        BFSGraph g = new BFSGraph(v);
+
+        System.out.println("Enter the starting and ending vertex of the edge");
+
+        for (int i = 0; i < e; i++) {
+
+            int v1 = sc.nextInt();
+            int v2 = sc.nextInt();
+
+            g.addEdge(v1, v2);
+        }
+
+        System.out.println("Enter the starting vertex");
+        int s = sc.nextInt();
+
+        g.BFS(s);
+        sc.close();
+    }
+}
+
+// DFS
+import java.util.LinkedList;
+import java.util.Scanner;
+
+public class DFSGraph {
+
+    private int ver;
+    private LinkedList<Integer>[] adjList;
+
+    DFSGraph(int v) {
+        ver = v;
+        adjList = new LinkedList[ver];
+
+        for (int i = 0; i < v; i++) {
+            adjList[i] = new LinkedList<>();
+        }
+    }
+
+    void addEdge(int v, int w) {
+        adjList[v].add(w);
+        adjList[w].add(v);
+    }
+
+    void DFS(int start) {
+        boolean[] vis = new boolean[ver];
+
+        System.out.println("DFS Traversal................");
+        dfsRecursive(start, vis);
+
+        System.out.println();
+    }
+
+    void dfsRecursive(int s, boolean[] vis) {
+        vis[s] = true;
+
+        System.out.print(s + " ");
+
+        for (int i : adjList[s]) {
+            if (!vis[i]) {
+                dfsRecursive(i, vis);
             }
         }
     }
 
-    // ---------------- Main ----------------
     public static void main(String[] args) {
 
-        GraphTraversal g = new GraphTraversal();
+        Scanner sc = new Scanner(System.in);
 
-        // BFS
-        g.bfs(0);
+        System.out.println("Enter the no of vertices");
+        int v = sc.nextInt();
 
-        System.out.println();
+        System.out.println("Enter the number of edges");
+        int e = sc.nextInt();
 
-        // DFS
-        boolean visited[] = new boolean[5];
+        DFSGraph g = new DFSGraph(v);
 
-        System.out.print("DFS Traversal: ");
-        g.dfs(0, visited);
+        System.out.println("Enter the starting and ending vertex of the edge");
+
+        for (int i = 0; i < e; i++) {
+            int v1 = sc.nextInt();
+            int v2 = sc.nextInt();
+
+            g.addEdge(v1, v2);
+        }
+
+        System.out.println("Enter the starting vertex");
+        int s = sc.nextInt();
+
+        g.DFS(s);
+        sc.close();
     }
 }
