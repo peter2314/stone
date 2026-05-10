@@ -1,0 +1,111 @@
+import java.util.*;
+
+public class AStar {
+
+    public static class Node {
+        int x, y, g;
+        Node p;
+
+        Node(int x, int y, int g, Node p) {//g=cost from start node
+            this.x = x;
+            this.y = y;
+            this.g = g;
+            this.p = p;
+        }
+    }
+
+    // Heuristic Function
+    static int h(int x, int y, int gx, int gy) {
+        return Math.abs(x - gx) + Math.abs(y - gy);
+    }
+
+    static void aStar(int rows, int cols, int sx, int sy, int gx, int gy) {
+
+        PriorityQueue<Node> pq = new PriorityQueue<>(
+                (a, b) -> (a.g + h(a.x, a.y, gx, gy)) - (b.g + h(b.x, b.y, gx, gy))
+        );
+
+        boolean[][] visited = new boolean[rows][cols];
+
+        // Start Node
+        pq.add(new Node(sx, sy, 0, null));
+
+        while (!pq.isEmpty()) {
+
+            Node c = pq.poll();
+
+            // Skip visited node
+            if (visited[c.x][c.y])
+                continue;
+
+            visited[c.x][c.y] = true;
+
+            // Goal reached
+            if (c.x == gx && c.y == gy) {
+                System.out.println("\nShortest Path:");
+                printPath(c);
+                return;
+            }
+
+            // Move Down
+            if (c.x + 1 < rows) {
+                pq.add(new Node(c.x + 1, c.y, c.g + 1, c));
+            }
+
+            // Move Right
+            if (c.y + 1 < cols) {
+                pq.add(new Node(c.x, c.y + 1, c.g + 1, c));
+            }
+
+            // Move Up
+            if (c.x - 1 >= 0) {
+                pq.add(new Node(c.x - 1, c.y, c.g + 1, c));
+            }
+
+            // Move Left
+            if (c.y - 1 >= 0) {
+                pq.add(new Node(c.x, c.y - 1, c.g + 1, c));
+            }
+        }
+
+        System.out.println("Path not found!");
+    }
+
+    // Print Path
+    static void printPath(Node n) {
+
+        if (n == null)
+            return;
+
+        printPath(n.p);
+
+        System.out.print("(" + n.x + "," + n.y + ") ");
+    }
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter number of rows: ");
+        int rows = sc.nextInt();
+
+        System.out.print("Enter number of columns: ");
+        int cols = sc.nextInt();
+
+        System.out.print("Enter Start x: ");
+        int sx = sc.nextInt();
+
+        System.out.print("Enter Start y: ");
+        int sy = sc.nextInt();
+
+        System.out.print("Enter Goal x: ");
+        int gx = sc.nextInt();
+
+        System.out.print("Enter Goal y: ");
+        int gy = sc.nextInt();
+
+        aStar(rows, cols, sx, sy, gx, gy);
+
+        sc.close();
+    }
+}
