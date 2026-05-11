@@ -1,0 +1,97 @@
+public class Sorting {
+public static void main() {
+Integer[] arr= new Integer[]{5, 3, 8, 1, 2};
+Integer n = arr.size();
+for (Integer i=0; i < n - 1; i++) { 
+for (Integer j= 0; j < n - i - 1 ; j++) { if (arr[j] > arr[j + 1]) 
+{ 
+// swap arr[j] & arr[j+1] 
+Integer temp = arr[j];
+ arr[j] = arr[j+1];
+ arr[j+1]= temp; }
+}
+}
+System.debug('Sorted numbers:'+ arr);
+}
+}
+
+Drbug- open execute anonymous window - type Sorting.main();- click open log - Execute
+
+
+//OR
+
+1)  Steps
+
+Setup ⚙️ → Object Manager → Create → Custom Object
+Label: Customer
+Object Name: Customer
+Check Allow Reports and Allow Activities
+Save
+
+2)Add Fields
+* Create fields like:
+
+Phone__c (Phone)
+Email__c (Email)
+Address__c (Text Area)
+
+3) Go to Developer Console → File → New → Apex Class
+
+public class CustomerService {
+
+    // Getter method for Visualforce
+    public List<Customer__c> getCustomers() {
+        return [SELECT Id, Name, Phone__c, Email__c FROM Customer__c];
+    }
+
+    // Insert customer
+    public void addCustomer(String name, String phone, String email) {
+        Customer__c c = new Customer__c();
+        c.Name = name;
+        c.Phone__c = phone;
+        c.Email__c = email;
+        insert c;
+    }
+
+    // Delete customer
+    public void deleteCustomer(Id custId) {
+        Customer__c c = [SELECT Id FROM Customer__c WHERE Id = :custId];
+        delete c;
+    }
+}
+
+4) Developer Console → New → Apex Trigger
+
+trigger CustomerTrigger on Customer__c (after insert) {
+    for(Customer__c c : Trigger.new) {
+        System.debug('New Customer Added: ' + c.Name);
+    }
+}
+
+5) Setup → Visualforce Pages → New
+Label	: Customer Page
+Name	: CustomerPage
+ Then paste
+
+<apex:page controller="CustomerService">
+    <apex:form>
+        <apex:pageBlock title="Customer List">
+            <apex:pageBlockTable value="{!getCustomers}" var="c">
+                <apex:column value="{!c.Name}" />
+                <apex:column value="{!c.Phone__c}" />
+                <apex:column value="{!c.Email__c}" />
+            </apex:pageBlockTable>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>
+
+6) Add to App
+Setup → App Manager → New Lightning App
+Add Customer object and Visualforce Page
+Save and Launch
+
+7) Test in Developer Console
+
+Open Query Editor:
+
+SELECT Id, Name FROM Customer__c

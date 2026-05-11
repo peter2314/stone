@@ -1,0 +1,76 @@
+1)Prerequisites 
+• OS: Ubuntu 18.04 
+• Google Account 
+• Internet connection 
+• Terminal access 
+
+2) Install Python 3 on Ubuntu 18.04 
+Ubuntu 18.04 comes with Python 3, but update to the latest stable version. 
+Step 2.1: Update system packages 
+sudo apt update 
+sudo apt upgrade -y 
+Step 2.2: Install Python 3 and pip 
+sudo apt install python3 python3-pip python3-venv -y 
+Step 2.3: Verify installation 
+python3 --version 
+pip3 --version 
+✔ Example Output: 
+Python 3.6.x 
+pip 9.x 
+
+3) Install Google Cloud SDK (Required for App Engine) 
+Google App Engine is managed using the Google Cloud SDK. 
+Step 3.1: Add Google Cloud repository 
+echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] 
+http://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a 
+/etc/apt/sources.list.d/google-cloud-sdk.list 
+Step 3.2: Import Google Cloud public key 
+curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add - 
+Step 3.3: Install Google Cloud SDK 
+sudo apt update 
+sudo apt install google-cloud-sdk -y 
+Step 3.4: Verify installation 
+gcloud --version 
+
+4) Initialize Google Cloud SDK 
+gcloud init 
+During initialization: 
+• Login with Google account 
+• Select/Create a Google Cloud Project 
+• Choose default region and zone 
+✔ This step links your local machine with Google App Engine 
+
+5) Install App Engine Python Component 
+gcloud components install app-engine-python 
+✔ Confirms Python runtime support for App Engine 
+
+6) Create a Sample Python App Engine Application 
+Step 6.1: Create project directory 
+mkdir myappengine 
+cd myappengine 
+Step 6.2: Create main.py 
+from flask import Flask 
+app = Flask(__name__) 
+@app.route('/') 
+def hello(): 
+return "Hello from Google App Engine with Python 3!" 
+if __name__ == '__main__': 
+app.run() 
+Step 6.3: Create app.yaml 
+runtime: python39 
+entrypoint: gunicorn -b :$PORT main:app 
+Step 6.4: Install Flask & Gunicorn 
+pip3 install flask gunicorn 
+
+7) Deploy Application to Google App Engine 
+Step 7.1: Deploy 
+gcloud app deploy 
+Step 7.2: Access application 
+gcloud app browse 
+✔ Your app is now live on Google Cloud  
+        
+8) Verify App Engine Services 
+gcloud app services list 
+gcloud app instances list 
+Google App Engine is a Platform as a Service (PaaS) that enables developers to build, deploy, 
+and scale web applications without managing infrastructure. 
