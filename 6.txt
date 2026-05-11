@@ -9,8 +9,7 @@ gcloud init
 git clone https://github.com/tanishka-walekar/LP-2.git
 ls
 cd LP-2
-ls
-nano t1.py
+ls t1.py
 python3 t1.py
 
 
