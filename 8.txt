@@ -1,0 +1,134 @@
+Step 2: Open Setup
+Click ⚙️ (Gear Icon)
+Click Setup
+Step 3: Create Custom Object — Student
+In Setup search box, search:
+Objects and Fields
+Click:
+Object Manager
+Click:
+Create → Custom Object
+Fill details:
+Field	Value
+Label	Student
+Plural Label	Students
+Record Name	Student Name
+Click Save
+Step 4: Create Fields for Student Object
+
+Inside Student Object:
+
+Click:
+Fields & Relationships → New
+
+Create these fields:
+
+Data Type	Field Name
+Email	Email
+Phone	Phone
+Text Area	Address
+Picklist	Course
+Picklist	Admission Status
+Step 5: Add Picklist Values
+Course
+
+Add:
+
+BCA
+BBA
+BTech
+MBA
+MCA
+Admission Status
+
+Add:
+
+Pending
+Approved
+Rejected
+Step 6: Create Tab
+Open Student Object
+Click:
+Tabs → New
+Select icon
+Save
+
+Now Student tab appears in app.
+
+Step 7: Create Salesforce App
+Search:
+App Manager
+Click:
+New Lightning App
+App Name:
+Admission Management System
+Click Next → Next → Save
+Add Student Tab to app.
+Step 8: Add Student Records
+Open App
+Open Student Tab
+Click New
+Enter details
+Save
+Step 9: Create Report
+Open:
+Reports
+Click:
+New Report
+Select:
+Students
+Create report:
+Approved Students
+Pending Students
+Course-wise students
+Save report.
+Step 10: Create Dashboard
+Open:
+Dashboards
+Click:
+New Dashboard
+Add charts:
+Total Students
+Approved Admissions
+Rejected Admissions
+Save dashboard.
+Step 11: Create Automation (Optional)
+
+Use Flow Builder:
+
+Search:
+Flows
+Create New Flow
+Condition:
+If Admission Status = Approved
+Action:
+Send Email to Student
+Final Output
+
+Your app will:
+
+Store student details
+Manage admissions
+Show reports
+Automate approval process
+Display dashboards
+Viva Questions Preparation
+What is Salesforce?
+
+Cloud-based CRM platform.
+
+What is a Custom Object?
+
+User-created database table in Salesforce.
+
+What is a Dashboard?
+
+Visual representation of reports.
+
+What is Flow Builder?
+
+Tool used for automation in Salesforce.
+
+What is CRM?
+
+Customer Relationship Management.
